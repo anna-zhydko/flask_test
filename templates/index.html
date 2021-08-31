@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>PayStore</title>
-</head>
-<body>
-    <h1>PayStore</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+<title>PayStore</title>
+{% endblock %}
+
+{% block body %}
+<h1>Hello world</h1>
+<form class="row g-3">
+  <div class="col-auto">
+    <label for="inputSum" class="visually-hidden">Сумма оплаты</label>
+    <input type="password" class="form-control" id="inputSum" placeholder="Сумма оплаты">
+  </div>
+    <select class="form-select" aria-label="Валюта">
+      <option selected>EUR</option>
+      <option value="1">USD</option>
+      <option value="2">RUB</option>
+    </select>
+  <div class="col-auto">
+    <label for="desc" class="form-label">Описание товара</label>
+    <textarea class="form-control" id="desc" rows="3"></textarea>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Оплатить</button>
+  </div>
+</form>
+{% endblock %}
