@@ -6,5 +6,25 @@
 
 {% block body %}
 <h1>Pay</h1>
+
+{{ currency }}
+
+<form class="row g-3" method="post" action="/pay" accept-charset="UTF-8">
+  <div class="col-auto">
+    <input type="hidden" class="form-control" name="amount" id="inputSum" placeholder="Сумма оплаты">
+  </div>
+    <select class="form-select" aria-label="Валюта">
+      <option selected>EUR</option>
+      <option value="1">USD</option>
+      <option value="2">RUB</option>
+    </select>
+  <div class="col-auto">
+    <label for="desc" class="form-label">Описание товара</label>
+    <textarea class="form-control" id="desc" rows="3"></textarea>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Оплатить</button>
+  </div>
+</form>
 {% endblock %}
 

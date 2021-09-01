@@ -6,19 +6,19 @@
 
 {% block body %}
 <h1>Hello world</h1>
-<form class="row g-3">
+<form class="row g-3" method="post" action="/pay" accept-charset="UTF-8">
   <div class="col-auto">
     <label for="inputSum" class="visually-hidden">Сумма оплаты</label>
-    <input type="password" class="form-control" id="inputSum" placeholder="Сумма оплаты">
+    <input type="number" class="form-control" id="inputSum" name="amount" placeholder="Сумма оплаты">
   </div>
-    <select class="form-select" aria-label="Валюта">
+    <select class="form-select" aria-label="Валюта" name="currency">
       <option selected>EUR</option>
       <option value="1">USD</option>
       <option value="2">RUB</option>
     </select>
   <div class="col-auto">
     <label for="desc" class="form-label">Описание товара</label>
-    <textarea class="form-control" id="desc" rows="3"></textarea>
+    <textarea class="form-control" id="desc" rows="3" name="description"></textarea>
   </div>
   <div class="col-auto">
     <button type="submit" class="btn btn-primary mb-3">Оплатить</button>
