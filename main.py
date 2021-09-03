@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from hashlib import sha256
 import requests
@@ -44,11 +44,26 @@ def pay():
         amount = request.form['amount']
         currency = request.form['currency']
         description = request.form['description']
-        # if currency == 978:
-        #     res = requests.post('https://pay.piastrix.com/ru/pay', params={'amount': amount, 'currency': currency,
-        #                                                                    })
-        sign = sign_gen(amount=amount, currency=currency, shop_id=shop_id, shop_order_id=2)
-        return render_template('pay.html', amount=amount, currency=currency, sign=sign, shop_id=shop_id, shop_order_id=2)
+        if currency == '978':
+            sign = sign_gen(amount=amount, currency=currency, shop_id=shop_id, shop_order_id=2)
+            res = requests.post('https://pay.piastrix.com/ru/pay', params={'amount': amount, 'currency': currency,
+                                                                           'shop_id': shop_id, 'shop_order_id': 2,
+                                                                           'sign': sign})
+            print(res.text)
+            return render_template('index.html')
+            # return render_template('pay.html', amount=amount, currency=currency, sign=sign, shop_id=shop_id, shop_order_id=2)
+        elif currency == '840':
+            sign = sign_gen(payer_currency=currency, shop_amount=amount, shop_currency=currency, shop_id=shop_id,
+                            shop_order_id=2)
+            response = requests.post('https://core.piastrix.com/bill/create', json={'shop_amount': amount,
+                                                                               'shop_currency': currency,
+                                                                               'shop_id': shop_id, 'shop_order_id': 2,
+                                                                               'payer_currency': currency,
+                                                                               'description': description,
+                                                                               'sign': sign})
+            response_url = (response.json()['data']['url'])
+
+            return redirect(response_url)
     else:
         return render_template('pay.html')
 
